@@ -77,5 +77,30 @@ class Dataset_WSI(data.Dataset):
                 
         return input_tensor, ID
 
+class Dataset_TMA_core(data.Dataset):
+
+    def __init__(self, list_IDs, labels):
+
+        self.labels = labels
+        self.list_IDs = list_IDs
+        
+    def __len__(self):
+
+        return len(self.list_IDs)
+
+    def __getitem__(self, index):
+
+        # Select sample
+        ID = self.list_IDs[index]
+        # Load data and get label
+        X = Image.open(ID)
+        X = np.asarray(X)
+        y = self.labels[index]
+
+        #data transformation
+        input_tensor = preprocess(X)
+                
+        return input_tensor, np.asarray(y)
+
 if __name__ == "__main__":
 	pass

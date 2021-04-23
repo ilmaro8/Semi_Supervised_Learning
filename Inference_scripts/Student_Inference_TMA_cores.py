@@ -122,7 +122,7 @@ def create_dir(directory):
 
 
 batch_size = args.BATCH_SIZE
-num_workers = 32
+num_workers = 2
 params_test = {'batch_size': batch_size,
           #'shuffle': True,
           #'sampler': ImbalancedDatasetSampler(test_dataset),
@@ -135,16 +135,49 @@ def find_first_two(array):
     x[max_1]=-1
     max_2 = np.argmax(x)
     max_val2 = x[max_2]
-    
-    if (MEDICAL_SOURCE=='TCGA'):
-        if(max_1==0 or max_2==0):
-            max_1 = max(max_1,max_2)
-            max_2 = max(max_1,max_2)
-    
+    """
+    if(max_1==0 or max_2==0):
+        max_1 = max(max_1,max_2)
+        max_2 = max(max_1,max_2)
+    """
     if (max_val1>(2*max_val2)):
         max_2 = max_1
     
     return max_1,max_2
+
+def assign_group(a, b, survival_groups=False):
+    # if both cancer and benign tissue are predicted
+    # ignore benign tissue for reporting, as pathologists do
+    if (a > 0) and (b == 0):
+        b = a
+    if (b > 0) and (a == 0):
+        a = b
+
+    if not survival_groups:
+        return a + b
+    else:
+        # get the actual Gleason pattern (range 3-5)
+        a += 2
+        b += 2
+        if a+b <= 6:
+            return 1
+        elif a+b == 7:
+            return 2
+        else:
+            return 3
+    
+def gleason_summary_wsum(y_pred, survival_groups=False, thres=None):
+    gleason_scores = y_pred.copy()
+    gleason_scores /= np.sum(gleason_scores)
+    # remove outlier predictions
+    if thres is not None:
+        gleason_scores[gleason_scores < thres] = 0
+    # and assign overall grade
+    idx = np.argsort(gleason_scores)[::-1]
+    primary_class = idx[0]
+    secondary_class = idx[1] if gleason_scores[idx[1]] > 0 else idx[0]
+    return primary_class, secondary_class
+    #return assign_group(primary_class, secondary_class, survival_groups)
 
 def majority_voting(array):
     majority = [0,0,0,0]
@@ -152,8 +185,7 @@ def majority_voting(array):
         #print(prob)
         idx = np.argmax(array[i])
         majority[idx] = majority[idx]+1
-    if (MEDICAL_SOURCE=='TCGA'):
-        majority[0]=0
+    #majority[0]=0
     pgp, sgp = find_first_two(majority)
     return pgp, sgp, majority
 
@@ -198,40 +230,46 @@ def load_and_evaluate(list_f,elems,directory_histograms):
 def gleason_score(primary,secondary):
     
     array = []
+    """
+    for i in range(len(primary)):
+        a = primary[i]
+        b = secondary[i]
+        
+        if (a > 0) and (b == 0):
+            b = a
+        if (b > 0) and (a == 0):
+            a = b
 
-    if (MEDICAL_SOURCE=='panda'):
+        sum_gs = a+b
+        
+        if (a==0 and b==0):
+            gs = 0
+        elif (a==1 and b==1):
+            gs = 1
+        elif (a==1 and b==2):
+            gs = 2
+        elif (a==2 and b==1):
+            gs = 3
+        elif (sum_gs==4):
+            gs = 4
+        elif (sum_gs>4):
+            gs = 5
 
-        for i in range(len(primary)):
-            gs = primary[i]+secondary[i]
-            
-            if (gs==3 and primary[i]==2):
-                gs = 3
-            elif (gs==3 and primary[i]==1):
-                gs = 2
-            elif (gs==4):
-                gs = 4
-            elif (gs>4):
-                gs = 5
-            array.append(gs)
+        array.append(gs)
+    """  
 
-    elif (MEDICAL_SOURCE=='TCGA'):
+    for i in range(len(primary)):
+        a = primary[i]
+        b = secondary[i]
+        
+        if (a > 0) and (b == 0):
+            b = a
+        if (b > 0) and (a == 0):
+            a = b
 
-        for i in range(len(primary)):
-            a = primary[i]
-            b = secondary[i]
-            
-            gs = a+b-2
+        gs = a+b
+        array.append(gs)
 
-            if (a==1 and b==2):
-                gs = 1
-            elif (a==2 and b==1):
-                gs = 2
-            elif (gs==2):
-                gs = 3
-            elif (gs>2):
-                gs = 4
-            array.append(gs)
-              
     return array
 
 def predict_metrics(y_pred,y_true,metric):

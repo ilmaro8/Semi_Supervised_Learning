@@ -32,6 +32,9 @@ args = parser.parse_args()
 
 THRESHOLD = args.THRESHOLD
 
+MEDICAL_SOURCE = 'TCGA'
+#MEDICAL_SOURCE = 'panda'
+
 assert not(args.APPROACH=='ssl' and args.DATASET=='weak')
 
 def create_dir(directory):
@@ -132,9 +135,10 @@ def find_first_two(array):
     max_2 = np.argmax(x)
     max_val2 = x[max_2]
     
-    if(max_1==0 or max_2==0):
-        max_1 = max(max_1,max_2)
-        max_2 = max(max_1,max_2)
+    if (MEDICAL_SOURCE=='TCGA'):
+        if(max_1==0 or max_2==0):
+            max_1 = max(max_1,max_2)
+            max_2 = max(max_1,max_2)
     
     if (max_val1>(2*max_val2)):
         max_2 = max_1
@@ -147,7 +151,8 @@ def majority_voting(array):
         #print(prob)
         idx = np.argmax(array[i])
         majority[idx] = majority[idx]+1
-    #majority[0]=0
+    if (MEDICAL_SOURCE=='TCGA'):
+        majority[0]=0
     pgp, sgp = find_first_two(majority)
     return pgp, sgp, majority
 
