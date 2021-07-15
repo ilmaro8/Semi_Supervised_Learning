@@ -272,6 +272,12 @@ The repository includes the scripts for training the models (training_scripts), 
 
 - ImbalancedDatasetSampler.py. The sampler used for the class-wise data augmentation. It is taken from [ufoym repository](https://github.com/ufoym/imbalanced-dataset-sampler).
 
+## Reference
+If you find this repository useful in your research, please cite:
+
+[1] Marini, N., Otálora, S., Müller, H., & Atzori, M. (2021). Semi-supervised training of deep convolutional neural networks with heterogeneous data and few local annotations: an experiment on prostate histopathology image classification, Medical Image Analysis
+
+Paper link: https://www.sciencedirect.com/science/article/pii/S1361841521002115
 
 ## Acknoledgements
 This project has received funding from the EuropeanUnion’s Horizon 2020 research and innovation programme under grant agree-ment No. 825292 [ExaMode](http://www.examode.eu). Infrastructure fromthe SURFsara HPC center was used to train the CNN models in parallel. Otálora thanks Minciencias through the call 756 for PhD studies.
