@@ -275,7 +275,7 @@ The repository includes the scripts for training the models (training_scripts), 
 ## Reference
 If you find this repository useful in your research, please cite:
 
-[1] Marini, N., Otálora, S., Müller, H., & Atzori, M. (2021). Semi-supervised training of deep convolutional neural networks with heterogeneous data and few local annotations: an experiment on prostate histopathology image classification, Medical Image Analysis
+[1] Marini N., Otálora S., Müller H., & Atzori M. (2021). "Semi-supervised training of deep convolutional neural networks with heterogeneous data and few local annotations: an experiment on prostate histopathology image classification", Medical Image Analysis (2021): 102165.
 
 Paper link: https://www.sciencedirect.com/science/article/pii/S1361841521002115
 
