@@ -1,8 +1,12 @@
 # Semi_Supervised_Learning
 Implementation of Semi-Supervised and Semi-Weakly Supervised Teacher/Student Learning approaches.
 
-If you find this code useful, consider citing the accompanying article:
-Sebastian Otálora, Niccolò Marini, Manfredo Atzori, and Henning Müller, et al. "Semi-Weakly Supervised Learning for Prostate Cancer Image Classification with Teacher-Student Deep Convolutional Networks." The 5th MICCAI Workshop on Large-scale Annotation of Biomedical data and Expert Label Synthesis LABELS 2020.
+## Reference
+If you find this repository useful in your research, please cite:
+
+[1] Marini N., Otálora S., Müller H., & Atzori M. (2021). "Semi-supervised training of deep convolutional neural networks with heterogeneous data and few local annotations: an experiment on prostate histopathology image classification", Medical Image Analysis (2021): 102165.
+
+Paper link: https://www.sciencedirect.com/science/article/pii/S1361841521002115
 
 ## Requirements
 Python==3.6.9, albumentations==0.1.8, numpy==1.17.3, opencv==4.2.0, pandas==0.25.2, pillow==6.1.0, torchvision==0.3.0, pytorch==1.1.0
@@ -271,13 +275,6 @@ The repository includes the scripts for training the models (training_scripts), 
 - DataGenerator.py. The generators for training and testing datasets, the data augmentation pipeline.
 
 - ImbalancedDatasetSampler.py. The sampler used for the class-wise data augmentation. It is taken from [ufoym repository](https://github.com/ufoym/imbalanced-dataset-sampler).
-
-## Reference
-If you find this repository useful in your research, please cite:
-
-[1] Marini N., Otálora S., Müller H., & Atzori M. (2021). "Semi-supervised training of deep convolutional neural networks with heterogeneous data and few local annotations: an experiment on prostate histopathology image classification", Medical Image Analysis (2021): 102165.
-
-Paper link: https://www.sciencedirect.com/science/article/pii/S1361841521002115
 
 ## Acknoledgements
 This project has received funding from the EuropeanUnion’s Horizon 2020 research and innovation programme under grant agree-ment No. 825292 [ExaMode](http://www.examode.eu). Infrastructure fromthe SURFsara HPC center was used to train the CNN models in parallel. Otálora thanks Minciencias through the call 756 for PhD studies.
