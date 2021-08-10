@@ -13,7 +13,7 @@ Python==3.6.9, albumentations==0.1.8, numpy==1.17.3, opencv==4.2.0, pandas==0.25
 
 ## Best models
 - The best models for the Teacher and the Student, trained with the Semi-Weakly Supervised approach, are available [here](https://drive.google.com/drive/folders/1HdCrMq5ojhi9fKF23e3viRt0hrVtRbvl?usp=sharing).
-- The best models for the Teacher and the Student, trained with the Semi-Supervised approach, are available [here] (https://drive.google.com/drive/folders/1Iif7oqgtGptdLC4Sc-Eo7ImzPecQU1uD).
+- The best models for the Teacher and the Student, trained with the Semi-Supervised approach, are available [here](https://drive.google.com/drive/folders/1Iif7oqgtGptdLC4Sc-Eo7ImzPecQU1uD).
 
 ## Datasets
 Two datasets are used for the experiments:
